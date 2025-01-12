@@ -1,5 +1,5 @@
-import { Element } from '../Element.js';
-import { Levels } from '../Levels.js';
+import { Element } from '../core/Element.js';
+import { Levels } from '../core/Levels.js';
 
 export class Door extends Element {
   constructor(env, x, y) {

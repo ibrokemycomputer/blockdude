@@ -1,5 +1,5 @@
-import { Levels } from './classes/Levels.js';
-import { Interface } from './classes/Interface.js';
+import { Levels } from './classes/core/Levels.js';
+import { Interface } from './classes/core/Interface.js';
 import { Keyboard } from './classes/inputs/Keyboard.js';
 import { Touch } from './classes/inputs/Touch.js';
 import { Gamepad } from './classes/inputs/Gamepad.js';

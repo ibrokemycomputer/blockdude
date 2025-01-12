@@ -1,4 +1,4 @@
-import { Element } from '../Element.js';
+import { Element } from '../core/Element.js';
 
 export class Dude extends Element {
   constructor(env, x, y, face) {

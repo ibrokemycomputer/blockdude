@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Block Dude</title>
+  
   <script type="module">
     import { createGame } from './blockdude.js';
     document.addEventListener('DOMContentLoaded', () => {
@@ -15,8 +16,17 @@
       container.focus();
     });
   </script>
+
   <style>
-    body { font-family: Courier, monospace; }
+    :root {
+      --color: #161716;
+      --background: #f0f7f0;
+    }
+    body { 
+      color: var(--color);
+      font-family: Courier, monospace;
+      background-color: var(--background);
+    }
 
     body, main {
       display: flex;
@@ -29,10 +39,15 @@
     block-dude {
       display: block;
       position: relative;
-      border: solid 1px black;
+      border: solid 4px var(--color);
+      background-color: #ddebde;
     }
     
-    block-dude img { position: absolute; }
+    block-dude img { 
+      position: absolute; 
+      user-select: none;
+      pointer-events: none;
+    }
   </style>
 </head>
 
