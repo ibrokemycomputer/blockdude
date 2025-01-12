@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Block Dude</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module">
+    import { createGame } from './blockdude.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector('block-dude');
+      if (!container) return;
+      createGame(container);
+      container.focus();
+    });
+  </script>
+  <style>
+    body { font-family: Courier, monospace; }
+
+    body, main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    main { max-width: 480px; }
+    
+    block-dude {
+      display: block;
+      position: relative;
+      border: solid 1px black;
+    }
+    
+    block-dude img { position: absolute; }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Block Dude</h1>
+
+    <block-dude></block-dude>
+
+    <section id="intro">
+      <p>Your goal is to get to the door on the map. Your character can fall any height but can only climb up one unit. You can pick up blocks with nothing on top of them and set them down in front of you or on top of a one-unit obstacle in front of you.</p>
+    </section>
+
+    <section id="controls">
+      <h2>Controls</h2>
+      <p>
+        <strong>Left Arrow</strong>: Move left and face left<br>
+        <strong>Right Arrow</strong>: Move right and face right
+      </p>
+      <p><em>The following apply in the direction your character is facing.</em></p>
+      <p>
+        <strong>Down Arrow</strong>: Pick up or drop block<br>
+        <strong>Up Arrow</strong>: Move upwards
+      </p>
+      <p>
+        <strong>"R" Key</strong>: Reset current level<br>
+        <strong>Shift Key</strong>: Hold shift and use arrows to pan
+      </p>
+    </section>
+
+  </main>
+</body>
+
+</html>
