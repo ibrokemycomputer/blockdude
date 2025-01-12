@@ -31,9 +31,9 @@ export function createGame(container) {
   window.addEventListener('hashchange', processHash);
 
   // Initialize controllers
-  new Keyboard(state, (key) => step(key));
-  new Touch(state, (key) => step(key));
-  new Gamepad(state, (key) => step(key));
+  new Keyboard(state, (key) => move(key));
+  new Touch(state, (key) => move(key));
+  new Gamepad(state, (key) => move(key));
 }
 
 function processHash() {
@@ -47,7 +47,7 @@ function processHash() {
   }
 }
 
-function step(key) {
+function move(key) {
   if (key < 0) return;
 
   // Handle reset key regardless of panning
