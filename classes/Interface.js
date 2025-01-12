@@ -9,7 +9,6 @@ export class Interface {
     this.pan = null;
     this.centerOn = null;
     this.panning = false;
-    // this.iid = 'int' + Math.random();
     this.imgroot = 'images/';
     this.images = { 'empty': 'empty', 'dudeLeft': 'dudeLeft', 'dudeRight': 'dudeRight', 'block': 'block', 'brick': 'brick', 'door': 'door' };
     this.grid = new Array();
@@ -20,9 +19,6 @@ export class Interface {
       for (let x = 0; x < this.w; x++) {
         this.grid[y][x] = document.createElement('img');
         this.grid[y][x].src = this.getImg('empty');
-        // this.grid[y][x].height = this.ch;
-        // this.grid[y][x].width = this.cw;
-        // this.grid[y][x].id = this.iid + '.' + y + '.' + x; //Necessary?
         this.grid[y][x].style.top = "" + (yy * this.ch) + "px";
         this.grid[y][x].style.left = "" + (x * this.cw) + "px";
         this.grid[y][x].style.width = "" + this.cw + "px";
