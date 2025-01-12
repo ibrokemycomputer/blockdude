@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Block Dude Level Creator</title>
+  <style>
+    #levelCanvas { border: 1px solid black; }
+    .selected { background-color: #ddd; }
+    .password-section {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .password-output {
+      font-family: monospace;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="controls">
+      <div>
+        <label>Width: <input type="number" id="widthInput" value="18" min="5" max="50"></label>
+        <label>Height: <input type="number" id="heightInput" value="12" min="5" max="50"></label>
+        <button onclick="resizeGrid()">Resize</button>
+      </div>
+      <div>
+        <button onclick="selectTool('empty')" id="emptyBtn">Eraser</button>
+        <button onclick="selectTool('#')" id="wallBtn">Wall (#)</button>
+        <button onclick="selectTool('B')" id="blockBtn">Block (B)</button>
+        <button onclick="selectTool('D')" id="doorBtn">Door (D)</button>
+        <button onclick="selectTool('U')" id="dudeBtn">Dude (U)</button>
+      </div>
+      <button onclick="exportLevel()">Export Level</button>
+      <textarea id="output" rows="20" cols="50" readonly></textarea>
+      <div>
+        <button onclick="importLevel()">Import Level</button>
+        <textarea id="import" rows="20" cols="50" placeholder="Paste level here and click Import"></textarea>
+      </div>
+      <div class="password-section">
+        <h3>Password Generator</h3>
+        <button onclick="generatePassword()">Generate Password</button>
+        <div class="password-output">
+          Password: <span id="passwordDisplay"></span><br>
+          URI Hash: <span id="uriDisplay"></span>
+        </div>
+      </div>
+    </div>
+    <canvas id="levelCanvas"></canvas>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('levelCanvas');
+    const ctx = canvas.getContext('2d');
+    let grid = [];
+    let currentTool = '#';
+    let cellSize = 30;
+    let isDragging = false;
+
+    function initGrid(width, height) {
+      grid = Array(height).fill().map(() => Array(width).fill(' '));
+      canvas.width = width * cellSize;
+      canvas.height = height * cellSize;
+      drawGrid();
+    }
+
+    function drawGrid() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw cells
+      for(let y = 0; y < grid.length; y++) {
+        for(let x = 0; x < grid[0].length; x++) {
+          ctx.strokeRect(x * cellSize, y * cellSize, cellSize, cellSize);
+          if(grid[y][x] !== ' ') {
+            ctx.fillStyle = 'black';
+            ctx.font = '20px Arial';
+            ctx.fillText(grid[y][x], x * cellSize + 10, y * cellSize + 20);
+          }
+        }
+      }
+    }
+
+    function selectTool(tool) {
+      currentTool = tool;
+      document.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+      document.getElementById(tool + 'Btn')?.classList.add('selected');
+    }
+
+    function handleCanvasClick(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.floor((e.clientX - rect.left) / cellSize);
+      const y = Math.floor((e.clientY - rect.top) / cellSize);
+      
+      if(x >= 0 && x < grid[0].length && y >= 0 && y < grid.length) {
+        if(currentTool === 'U') {
+          // Remove existing dude if present
+          for(let i = 0; i < grid.length; i++) {
+            for(let j = 0; j < grid[0].length; j++) {
+              if(grid[i][j] === 'U') grid[i][j] = ' ';
+            }
+          }
+        }
+        grid[y][x] = currentTool === 'empty' ? ' ' : currentTool;
+        drawGrid();
+      }
+    }
+
+    function exportLevel() {
+      let result = '';
+      for(let y = 0; y < grid.length; y++) {
+        result += grid[y].join('') + '\n';
+      }
+      document.getElementById('output').value = result.trim();
+    }
+
+    function resizeGrid() {
+      const width = parseInt(document.getElementById('widthInput').value);
+      const height = parseInt(document.getElementById('heightInput').value);
+      initGrid(width, height);
+    }
+
+    function importLevel() {
+      const importText = document.getElementById('import').value.trim();
+      if (!importText) {
+        alert('Please paste a level first');
+        return;
+      }
+
+      const rows = importText.split('\n');
+      if (rows.length === 0) {
+        alert('Invalid level format');
+        return;
+      }
+
+      // Validate level content
+      const width = Math.max(...rows.map(row => row.length));
+      const height = rows.length;
+      const validChars = new Set([' ', '#', 'B', 'D', 'U']);
+      
+      let hasDude = false;
+      let hasDoor = false;
+
+      for (const row of rows) {
+        for (const char of row) {
+          if (!validChars.has(char)) {
+            alert('Invalid character found: ' + char);
+            return;
+          }
+          if (char === 'U') hasDude = true;
+          if (char === 'D') hasDoor = true;
+        }
+      }
+
+      if (!hasDude || !hasDoor) {
+        alert('Level must contain both a Dude (U) and a Door (D)');
+        return;
+      }
+
+      // Update grid size inputs
+      document.getElementById('widthInput').value = width;
+      document.getElementById('heightInput').value = height;
+      
+      // Create new grid
+      grid = Array(height).fill().map(() => Array(width).fill(' '));
+      
+      // Fill grid with level data
+      for (let y = 0; y < rows.length; y++) {
+        const chars = rows[y].split('');
+        for (let x = 0; x < chars.length; x++) {
+          grid[y][x] = chars[x];
+        }
+      }
+
+      // Update canvas size and redraw
+      canvas.width = width * cellSize;
+      canvas.height = height * cellSize;
+      drawGrid();
+    }
+
+    function generatePassword() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let password = '';
+      
+      // Generate 3 random characters
+      for(let i = 0; i < 3; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+
+      // Convert to URI format
+      const uriHash = '%' + password.split('')
+        .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
+        .join('%');
+
+      // Display results
+      document.getElementById('passwordDisplay').textContent = password;
+      document.getElementById('uriDisplay').textContent = uriHash;
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      handleCanvasClick(e);
+    });
+    canvas.addEventListener('mousemove', (e) => {
+      if(isDragging) handleCanvasClick(e);
+    });
+    canvas.addEventListener('mouseup', () => isDragging = false);
+    canvas.addEventListener('mouseleave', () => isDragging = false);
+
+    // Initialize with default size
+    initGrid(18, 12);
+    selectTool('#');
+  </script>
+</body>
+</html>
