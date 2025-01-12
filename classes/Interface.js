@@ -39,7 +39,7 @@ export class Interface {
   }
 
   getImg(k) {
-    return this.imgroot + this.images[k] + '.png';
+    return this.imgroot + this.images[k] + '.svg';
   }
 
   render(c) {
