@@ -21,11 +21,14 @@
     :root {
       --color: #161716;
       --background: #f0f7f0;
+      color-scheme: light dark;
     }
+    
+    * { font-family: 'Courier New', Courier, monospace; }
+
     body { 
-      color: var(--color);
-      font-family: Courier, monospace;
-      background-color: var(--background);
+      color: light-dark(var(--color), var(--background));
+      background-color: light-dark(var(--background), var(--color));
     }
 
     body, main {

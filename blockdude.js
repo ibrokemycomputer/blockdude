@@ -11,6 +11,19 @@ export function createGame(container) {
   state.iface = new Interface(null, 18, 12);
   state.iface.render(container);
 
+  // Check for custom level in query params first
+  const params = new URLSearchParams(window.location.search);
+  const customLevel = params.get('level');
+  if (customLevel) {
+    try {
+      const levelData = JSON.parse(decodeURIComponent(customLevel));
+      Levels.loadCustomLevel(state, levelData);
+      return;
+    } catch (e) {
+      console.error('Invalid custom level data:', e);
+    }
+  }
+
   // Handle initial hash on page load
   window.location.hash ? processHash() : Levels.setLevel(state, 0);
 
