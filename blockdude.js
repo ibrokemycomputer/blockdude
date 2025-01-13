@@ -20,7 +20,7 @@ export function createGame(container) {
   const fullscreenBtn = document.querySelector('.fullscreen-button');
   if (fullscreenBtn) {
     fullscreenBtn.addEventListener('click', () => {
-      const container = document.querySelector('.fullscreen-container');
+      const container = document.querySelector('fullscreen-container');
       if (!document.fullscreenElement) {
         container.requestFullscreen().catch(err => {
           console.error(`Error attempting to enable fullscreen: ${err.message}`);

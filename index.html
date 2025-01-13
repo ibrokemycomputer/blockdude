@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Block Dude</title>
+  <meta name="description" content="Block Dude game for the TI-83/84 in JavaScript">
   
   <script type="module">
     import { createGame } from './blockdude.js';
@@ -94,9 +95,11 @@
       box-shadow: 0 0 1px rgb(255, 255, 255);
     }
 
-    .fullscreen-container {
+    fullscreen-container {
+      display: block;
+      aspect-ratio: var(--bd-ratio);
+      place-content: center;
       position: relative;
-      width: 100%;
     }
 
     .fullscreen-button {
@@ -119,7 +122,6 @@
 
     :fullscreen block-dude {
       width: 100vw;
-      height: 100vh;
       aspect-ratio: unset;
       border: none;
     }
@@ -128,10 +130,10 @@
 
 <body>
   <main>
-    <div class="fullscreen-container">
+    <fullscreen-container>
       <button class="fullscreen-button">Fullscreen</button>
       <block-dude></block-dude>
-    </div>
+    </fullscreen-container>
 
     <div data-scroller>
       <h1>Block Dude</h1>
