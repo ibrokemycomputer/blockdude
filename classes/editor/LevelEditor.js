@@ -44,14 +44,14 @@ export class LevelEditor {
       if (this.#isDragging) this.#handleCanvasClick(e);
     });
 
-    this.#canvas.addEventListener('mouseup', () => this.#isDragging = false);
-    this.#canvas.addEventListener('mouseleave', () => this.#isDragging = false);
+    this.#canvas?.addEventListener('mouseup', () => this.#isDragging = false);
+    this.#canvas?.addEventListener('mouseleave', () => this.#isDragging = false);
 
     // Button events
-    document.getElementById('resizeBtn').addEventListener('click', () => this.#resizeGrid());
-    document.getElementById('exportBtn').addEventListener('click', () => this.#exportLevel());
-    document.getElementById('importBtn').addEventListener('click', () => this.#importLevel());
-    document.getElementById('generateBtn').addEventListener('click', () => this.#generatePassword());
+    document.getElementById('resizeBtn')?.addEventListener('click', () => this.#resizeGrid());
+    document.getElementById('exportBtn')?.addEventListener('click', () => this.#exportLevel());
+    document.getElementById('importBtn')?.addEventListener('click', () => this.#importLevel());
+    document.getElementById('generateBtn')?.addEventListener('click', () => this.#generatePassword());
 
     // Tool selection
     const toolButtons = document.querySelectorAll('[data-tool]');
@@ -90,12 +90,12 @@ export class LevelEditor {
 
   selectTool(tool) {
     this.#currentTool = tool;
-    document.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+    document.querySelectorAll('button')?.forEach(btn => btn.classList.remove('selected'));
     document.getElementById(tool + 'Btn')?.classList.add('selected');
   }
 
   #handleCanvasClick(e) {
-    const rect = this.#canvas.getBoundingClientRect();
+    const rect = this.#canvas?.getBoundingClientRect();
     const x = Math.floor((e.clientX - rect.left) / this.#cellSize);
     const y = Math.floor((e.clientY - rect.top) / this.#cellSize);
 
