@@ -16,7 +16,7 @@ export class Gamepad {
 
     // Start polling for gamepad input
     this.startPolling();
-    
+
     // Handle gamepad connections/disconnections
     window.addEventListener('gamepadconnected', this.onGamepadConnected.bind(this));
     window.addEventListener('gamepaddisconnected', this.onGamepadDisconnected.bind(this));

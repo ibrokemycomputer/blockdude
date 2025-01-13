@@ -8,6 +8,9 @@ export class Keyboard {
     R: 'r'
   };
 
+  #keydownHandler;
+  #keyupHandler;
+
   constructor(gameState, stepCallback) {
     this.gameState = gameState;
     this.stepCallback = stepCallback;
@@ -15,9 +18,12 @@ export class Keyboard {
     this.keyInterval = null;
     this.pressedKeys = new Set();
 
+    this.#keydownHandler = (e) => this.keydown(e);
+    this.#keyupHandler = (e) => this.keyup(e);
+
     // Bind event handlers
-    document.onkeydown = this.keydown.bind(this);
-    document.onkeyup = this.keyup.bind(this);
+    document.addEventListener('keydown', this.#keydownHandler);
+    document.addEventListener('keyup', this.#keyupHandler);
   }
 
   keydown(e) {
@@ -65,5 +71,10 @@ export class Keyboard {
     if (!this.gameState.panning && this.gameState.iface) {
       this.gameState.iface.center();
     }
+  }
+
+  cleanup() {
+    document.removeEventListener('keydown', this.#keydownHandler);
+    document.removeEventListener('keyup', this.#keyupHandler);
   }
 }

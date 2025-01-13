@@ -17,10 +17,10 @@ export class LevelEditor {
     this.#ctx = this.#canvas.getContext('2d');
 
     // Load sprites
-    this.#sprites['#'].src = '../images/brick.svg';
-    this.#sprites['B'].src = '../images/block.svg';
-    this.#sprites['D'].src = '../images/door.svg';
-    this.#sprites['U'].src = '../images/dudeLeft.svg';
+    this.#sprites['#'].src = './images/brick.svg';
+    this.#sprites['B'].src = './images/block.svg';
+    this.#sprites['D'].src = './images/door.svg';
+    this.#sprites['U'].src = './images/dudeLeft.svg';
 
     this.#initializeEventListeners();
 
@@ -121,14 +121,14 @@ export class LevelEditor {
 
     // Find player position
     const start = this.#findStartPosition();
-    
+
     // Generate URL-friendly format
     const levelData = {
       map: this.#generateLevelArray(),
       start: start,
       door: this.#findDoorPosition()
     };
-    
+
     const urlParam = encodeURIComponent(JSON.stringify(levelData));
     const baseUrl = window.location.origin + window.location.pathname.replace('editor.html', 'index.html');
     const urlOutput = document.getElementById('urlOutput');

@@ -183,7 +183,7 @@ export class Levels {
     '%54%77%65',
     '%6e%54%79',
     '%69%52%43',
-    '%4a%6d%4b', 
+    '%4a%6d%4b',
     '%77%54%46'
   ];
 
@@ -218,7 +218,7 @@ export class Levels {
       }
     }
     let env = new Environment(mcols, rows.length);
-    
+
     // Ensure state is properly initialized
     if (!env.state) {
       env.state = {
@@ -228,7 +228,7 @@ export class Levels {
         iface: null
       };
     }
-    
+
     let dude;
     for (let r = 0; r < rows.length; r++) {
       let y = rows.length - r - 1;
@@ -265,14 +265,26 @@ export class Levels {
     state.iface.update();
     let lvlhash = Levels.#HASHES[levelIndex];
     if (levelIndex != 0 && lvlhash) {
-        if (window.location.hash != lvlhash) window.location.hash = lvlhash;
+      if (window.location.hash != lvlhash) window.location.hash = lvlhash;
     } else {
-        if (window.location.hash != '#' && window.location.hash != '') window.location.hash = '';
+      if (window.location.hash != '#' && window.location.hash != '') window.location.hash = '';
     }
   }
 
   static nextLevel(state) {
     state.completed = (state.completed || 0) + 1;
+
+    if (state.level === -1) {  // Custom level
+      if (confirm('Level Complete! Would you like to play again?')) {
+        return Levels.loadCustomLevel(state, state.customLevelData);
+      } else {
+        // Delete custom level query param
+        window.history.replaceState({}, document.title, window.location.pathname);
+        // Return to main game if they don't want to replay
+        return Levels.setLevel(state, 0);
+      }
+    }
+
     if ((state.level || 0) + 1 >= Levels.getLevelCount()) {
       alert("Congratulations! You've completed all levels!");
       state.level = -1;
@@ -286,7 +298,7 @@ export class Levels {
     }
 
     // Convert the level data into a string format
-    const mapStr = levelData.map.map(row => 
+    const mapStr = levelData.map.map(row =>
       row.map(cell => {
         switch (cell) {
           case 'wall': return '#';
@@ -301,12 +313,12 @@ export class Levels {
     let rows = mapStr.split('\n');
     const dudeY = levelData.start.y;
     const doorY = levelData.door.y;
-    
-    rows[dudeY] = rows[dudeY].substring(0, levelData.start.x) + 'U' + 
-                  rows[dudeY].substring(levelData.start.x + 1);
-    
-    rows[doorY] = rows[doorY].substring(0, levelData.door.x) + 'D' + 
-                  rows[doorY].substring(levelData.door.x + 1);
+
+    rows[dudeY] = rows[dudeY].substring(0, levelData.start.x) + 'U' +
+      rows[dudeY].substring(levelData.start.x + 1);
+
+    rows[doorY] = rows[doorY].substring(0, levelData.door.x) + 'D' +
+      rows[doorY].substring(levelData.door.x + 1);
 
     const finalLevelStr = rows.join('\n');
     const lvl = Levels.makeLevel(finalLevelStr);
@@ -315,8 +327,11 @@ export class Levels {
     state.dude = lvl.dude;
     state.env = lvl.env;
     lvl.env.state = state;
+
+    // Ensure the interface is properly connected
     state.iface.setEnvironment(state.env);
     state.iface.setCenter(state.dude);
+    state.env.update(); // Make sure environment is initialized
     state.iface.update();
   }
 }

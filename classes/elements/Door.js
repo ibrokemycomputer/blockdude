@@ -6,7 +6,7 @@ export class Door extends Element {
     super();
     if (!env) return;
     this.env = env;
-    
+
     // Initialize state if it doesn't exist
     if (!this.env.state) {
       this.env.state = {
@@ -16,7 +16,7 @@ export class Door extends Element {
         iface: null
       };
     }
-    
+
     this.x = x;
     this.y = y;
     this.type = 'door';

@@ -7,7 +7,12 @@ import { Gamepad } from './classes/inputs/Gamepad.js';
 let state = {};
 
 export function createGame(container) {
-  state.panning = false;
+  // Initialize state with required properties
+  state = {
+    panning: false,
+    completed: 0,
+    level: -1
+  };
   state.iface = new Interface(null, 18, 12);
   state.iface.render(container);
 
@@ -17,7 +22,8 @@ export function createGame(container) {
   if (customLevel) {
     try {
       const levelData = JSON.parse(decodeURIComponent(customLevel));
-      Levels.loadCustomLevel(state, levelData);
+      createCustomLevel(levelData);
+      initializeControllers();  // Add this line
       return;
     } catch (e) {
       console.error('Invalid custom level data:', e);
@@ -30,10 +36,19 @@ export function createGame(container) {
   // Listen for hash changes
   window.addEventListener('hashchange', processHash);
 
-  // Initialize controllers
-  new Keyboard(state, (key) => move(key));
-  new Touch(state, (key) => move(key));
-  new Gamepad(state, (key) => move(key));
+  initializeControllers();  // Move controller initialization here
+}
+
+function initializeControllers() {
+  // Remove any existing controllers
+  state.controllers?.forEach(controller => controller.cleanup?.());
+
+  // Initialize new controllers
+  state.controllers = [
+    new Keyboard(state, (key) => move(key)),
+    new Touch(state, (key) => move(key)),
+    new Gamepad(state, (key) => move(key))
+  ];
 }
 
 function processHash() {
@@ -52,7 +67,12 @@ function move(key) {
 
   // Handle reset key regardless of panning
   if (key === Keyboard.KEYS.R) {
-    Levels.setLevel(state, state.level || 0);
+    if (state.level === -1 && state.customLevelData) {
+      // Reload custom level
+      Levels.loadCustomLevel(state, state.customLevelData);
+    } else {
+      Levels.setLevel(state, state.level || 0);
+    }
     return;
   }
 
@@ -92,4 +112,10 @@ function move(key) {
         break;
     }
   }
+}
+
+// Add the custom level data to state when loading
+function createCustomLevel(levelData) {
+  state.customLevelData = levelData;  // Store for resets
+  Levels.loadCustomLevel(state, levelData);
 }
