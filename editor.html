@@ -57,7 +57,7 @@
       image-rendering: crisp-edges;
       display: block;
       grid-area: canvas;
-      border: 1px solid var(--color);
+      border: 4px solid light-dark(var(--background), var(--color));  
       justify-self: center;
       background: #ddebde;
     }
@@ -83,10 +83,6 @@
     .selected {
       background-color: light-dark(var(--background), var(--color));
     }
-
-    #sprites {
-      display: none;
-    }
   </style>
 </head>
 
@@ -96,13 +92,14 @@
     <h1>Block Dude Level Creator</h1>
 
     <section id="controls">
-      <fieldset>
+      <fieldset id="controlsField">
         <legend>Level Size</legend>
         <label>Width: <input type="number" id="widthInput" value="18" min="5" max="50"></label>
         <label>Height: <input type="number" id="heightInput" value="12" min="5" max="50"></label>
         <button id="resizeBtn">Resize</button>
       </fieldset>
-      <fieldset>
+      
+      <fieldset id="toolsField">
         <legend>Tools</legend>
         <button id="emptyBtn" data-tool="empty">Eraser</button>
         <button id="wallBtn" data-tool="#">Wall (#)</button>
@@ -110,7 +107,8 @@
         <button id="doorBtn" data-tool="D">Door (D)</button>
         <button id="dudeBtn" data-tool="U">Dude (U)</button>
       </fieldset>
-      <fieldset>
+      
+      <fieldset id="passwordField">
         <legend>Password Generator</legend>
         <button id="generateBtn">Generate Password</button>
         <output id="passwordoutput">
@@ -123,8 +121,10 @@
 
     <section id="levelexport">
       <button id="exportBtn">Export Level</button>
+      
       <h4>Shareable URL:</h4>
       <textarea id="urlOutput" rows="3" cols="50" readonly></textarea>
+      
       <h4>Plain Text Format:</h4>
       <textarea id="output" rows="10" cols="50" readonly></textarea>
     </section>
@@ -132,8 +132,10 @@
     <section id="levelimport">
       <button id="importBtn">Import Level</button>
       <button id="urlImportBtn">Import from URL</button>
+      
       <h4>Import from URL:</h4>
       <textarea id="urlImport" rows="3" cols="50" placeholder="Paste level URL here"></textarea>
+      
       <h4>Import from Text:</h4>
       <textarea id="import" rows="10" cols="50" placeholder="Paste level here and click Import"></textarea>
     </section>

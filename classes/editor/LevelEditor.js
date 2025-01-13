@@ -247,7 +247,7 @@ export class LevelEditor {
   #importFromUrl() {
     const urlInput = document.getElementById('urlImport');
     const url = urlInput.value.trim();
-    
+
     if (!url) {
       alert('Please enter a level URL');
       return;
@@ -256,14 +256,14 @@ export class LevelEditor {
     try {
       const urlObj = new URL(url);
       const levelParam = urlObj.searchParams.get('level');
-      
+
       if (!levelParam) {
         alert('Invalid level URL');
         return;
       }
 
       const levelData = JSON.parse(decodeURIComponent(levelParam));
-      
+
       if (!levelData.map || !levelData.start || !levelData.door) {
         alert('Invalid level data in URL');
         return;
@@ -278,7 +278,7 @@ export class LevelEditor {
       this.initGrid(width, height);
       this.#grid = levelData.map;
       this.#drawGrid();
-      
+
       urlInput.value = '';
     } catch (error) {
       alert('Error importing level from URL: ' + error.message);
@@ -292,7 +292,7 @@ export class LevelEditor {
     for (let i = 0; i < 3; i++) {
       password += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    
-    document.getElementById('passwordDisplay')?.textContent = password;
+
+    document.getElementById('passwordDisplay').textContent = password;
   }
 }
