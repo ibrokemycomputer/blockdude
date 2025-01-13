@@ -22,11 +22,20 @@
       --color: #161716;
       --background: #f0f7f0;
       color-scheme: light dark;
+      --content-max-width: 512px;
+      --bd-ratio: 18 / 12;
+      --bd-ratio-reverse: 12 / 18;
     }
     
-    * { font-family: 'Courier New', Courier, monospace; }
+    * { 
+      font-family: 'Courier New', Courier, monospace; 
+      box-sizing: border-box; 
+    }
 
-    body { 
+    html, body {
+      margin: 0;
+      padding: 0;
+      line-height: 1.5;
       color: light-dark(var(--color), var(--background));
       background-color: light-dark(var(--background), var(--color));
     }
@@ -37,17 +46,20 @@
       align-items: center;
     }
 
-    main { max-width: 480px; }
+    main { 
+      max-width: var(--content-max-width); 
+      margin: 1rem;
+    }
     
     block-dude {
       display: block;
       position: relative;
-      border: solid 4px var(--color);
+      border: solid 4px light-dark(var(--color), var(--background));
       background-color: #ddebde;
     }
     
     block-dude { 
-      aspect-ratio: 18 / 12;
+      aspect-ratio: var(--bd-ratio);
       width: 100%;
     }
 
@@ -59,35 +71,59 @@
       height: 100%;
       box-shadow: inset 0 0 10px 1px #303330;
     }
+
+    [data-scroller] {
+      --m-top: 1lh;
+      margin-top: var(--m-top);
+      --canvas-height: min(100dvw, var(--content-max-width)) * var(--bd-ratio-reverse);
+      max-height: calc(100dvh - var(--canvas-height) - 2.25rem - var(--m-top));
+      padding-bottom: 1lh;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 4px;
+      border: 1px solid light-dark(var(--color), var(--background));
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: light-dark(var(--color), var(--background));
+      box-shadow: 0 0 1px rgb(255, 255, 255);
+    }
   </style>
 </head>
 
 <body>
   <main>
-    <h1>Block Dude</h1>
-
     <block-dude></block-dude>
 
-    <section id="intro">
-      <p>Your goal is to get to the door on the map. Your character can fall any height but can only climb up one unit. You can pick up blocks with nothing on top of them and set them down in front of you or on top of a one-unit obstacle in front of you.</p>
-    </section>
+    <div data-scroller>
+      <h1>Block Dude</h1>
 
-    <section id="controls">
-      <h2>Controls</h2>
-      <p>
-        <strong>Left Arrow</strong>: Move left and face left<br>
-        <strong>Right Arrow</strong>: Move right and face right
-      </p>
-      <p><em>The following apply in the direction your character is facing.</em></p>
-      <p>
-        <strong>Down Arrow</strong>: Pick up or drop block<br>
-        <strong>Up Arrow</strong>: Move upwards
-      </p>
-      <p>
-        <strong>"R" Key</strong>: Reset current level<br>
-        <strong>Shift Key</strong>: Hold shift and use arrows to pan
-      </p>
-    </section>
+      <section id="intro">
+        <p>Your goal is to get to the door on the map. Your character can fall any height but can only climb up one unit. You can pick up blocks with nothing on top of them and set them down in front of you or on top of a one-unit obstacle in front of you.</p>
+      </section>
+
+      <section id="controls">
+        <h2>Controls</h2>
+        <p>
+          <strong>Left Arrow</strong>: Move left and face left<br>
+          <strong>Right Arrow</strong>: Move right and face right
+        </p>
+        <p><em>The following apply in the direction your character is facing.</em></p>
+        <p>
+          <strong>Down Arrow</strong>: Pick up or drop block<br>
+          <strong>Up Arrow</strong>: Move upwards
+        </p>
+        <p>
+          <strong>"R" Key</strong>: Reset current level<br>
+          <strong>Shift Key</strong>: Hold shift and use arrows to pan
+        </p>
+      </section>
+    </div>
 
   </main>
 </body>
