@@ -1,5 +1,7 @@
 # Block Dude for Web
 
+Play now at https://ibrokemycomputer.github.io/blockdude/
+
 ## Intro/Credits
 
 As with all projects, **a WIP**! I'll be honest, I kinda just lazily migrated things/didn't try to optimize much. See [Issues](https://github.com/ibrokemycomputer/blockdude/issues) for known issues/upcoming feature ideas.
@@ -18,17 +20,21 @@ Just serve the folder as a simple website using your favorite IDE plugin (many p
 
 I added a level editor! Block Dude is great, but whats an old-school port without the ability for custom maps?
 
-You can view the editor at `/editor` (in `editor.html`).
+The editor is locatwed in `editor.html`. An online/demo editor can be found [here](https://ibrokemycomputer.github.io/blockdude/editor).
 
-It's still somewhat a WIP but seems to "basically" work. Im sure there's some optimization to do there. 
+It's still somewhat a WIP but seems to "basically" work. I'm sure there's some optimizations/fixes to do.
 
-There's an option to import a level from its text format, and to export to text format (for dev use) but also to a URL that will dynamically load in a custom level.
+There's an option to import/export levels from/to either a text format (for dev use) but also to a URL that will dynamically load in a custom level.
 
-After beating a custom level, you have the option to replay (OK) or go to the default first level (CANCEL). This needs better UX.
+After beating a custom level, you have the option to replay (OK) or go to the default first level (CANCEL). (This needs better UX...).
 
-Note: The "Password Generator" is for "dev use" if they wanted to add a new level to the `#LEVELS` and `#HASHES` in `Levels.js`.
+Note: The "Password Generator" is for "dev use" if you want to add a new level to the `#LEVELS` and `#HASHES` in `Levels.js`.
+
+WIP: I created a "community" levels folder with an example. Idk, might become a thing, might not. Open to PRs I guess?
 
 ## Level Passwords
+
+### Original
 
 - Level 01 - `tcp`
 - Level 02 - `ARo`
@@ -41,6 +47,10 @@ Note: The "Password Generator" is for "dev use" if they wanted to add a new leve
 - Level 09 - `iRC`
 - Level 10 - `JmK`
 - Level 11 - `wTF`
+
+### Community (WIP)
+
+- Community 01 - `Pv4`
 
 ---
 
