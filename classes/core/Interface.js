@@ -42,7 +42,8 @@ export class Interface {
       img.onload = () => {
         this.#loadedImages++;
         if (this.#loadedImages === this.#totalImages) {
-          this.update(); // Initial render once all images are loaded
+          // Initial render once all images are loaded
+          this.update();
         }
       };
       img.src = this.getImg(k);
@@ -57,8 +58,6 @@ export class Interface {
   render(c) {
     if (!c) c = document.body;
     c.appendChild(this.#canvas);
-    c.style.width = `${this.w * this.cw}px`;
-    c.style.height = `${this.h * this.ch}px`;
   }
 
   setEnvironment(env) {
