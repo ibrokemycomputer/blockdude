@@ -53,7 +53,7 @@ function initializeControllers() {
 
 function processHash() {
   let pass = window.location.hash;
-  if (pass.charCodeAt(0) == 35) {
+  if (pass.startsWith('#')) {
     pass = pass.substring(1);
   }
   const levelIndex = Levels.getLevelByHash(pass);

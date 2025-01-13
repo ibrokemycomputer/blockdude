@@ -13,7 +13,7 @@ export class LevelEditor {
   };
 
   constructor() {
-    this.#canvas = document.getElementById('levelCanvas');
+    this.#canvas = document.querySelector('main canvas');
     this.#ctx = this.#canvas.getContext('2d');
 
     // Load sprites
@@ -52,6 +52,10 @@ export class LevelEditor {
     document.getElementById('exportBtn')?.addEventListener('click', () => this.#exportLevel());
     document.getElementById('importBtn')?.addEventListener('click', () => this.#importLevel());
     document.getElementById('generateBtn')?.addEventListener('click', () => this.#generatePassword());
+    document.getElementById('urlImportBtn')?.addEventListener('click', () => this.#importFromUrl());
+
+    // Generate a password on load
+    this.#generatePassword();
 
     // Tool selection
     const toolButtons = document.querySelectorAll('[data-tool]');
@@ -154,13 +158,7 @@ export class LevelEditor {
       const row = [];
       for (let x = 0; x < this.#grid[0].length; x++) {
         const cell = this.#grid[y][x];
-        switch (cell) {
-          case '#': row.push('wall'); break;
-          case 'B': row.push('block'); break;
-          case 'D': row.push('door'); break;
-          case ' ': row.push('empty'); break;
-          case 'U': row.push('empty'); break; // Player position handled separately
-        }
+        row.push(cell === ' ' ? ' ' : cell);
       }
       array.push(row);
     }
@@ -246,6 +244,47 @@ export class LevelEditor {
     this.#drawGrid();
   }
 
+  #importFromUrl() {
+    const urlInput = document.getElementById('urlImport');
+    const url = urlInput.value.trim();
+    
+    if (!url) {
+      alert('Please enter a level URL');
+      return;
+    }
+
+    try {
+      const urlObj = new URL(url);
+      const levelParam = urlObj.searchParams.get('level');
+      
+      if (!levelParam) {
+        alert('Invalid level URL');
+        return;
+      }
+
+      const levelData = JSON.parse(decodeURIComponent(levelParam));
+      
+      if (!levelData.map || !levelData.start || !levelData.door) {
+        alert('Invalid level data in URL');
+        return;
+      }
+
+      const width = levelData.map[0].length;
+      const height = levelData.map.length;
+
+      document.getElementById('widthInput').value = width;
+      document.getElementById('heightInput').value = height;
+
+      this.initGrid(width, height);
+      this.#grid = levelData.map;
+      this.#drawGrid();
+      
+      urlInput.value = '';
+    } catch (error) {
+      alert('Error importing level from URL: ' + error.message);
+    }
+  }
+
   #generatePassword() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let password = '';
@@ -253,12 +292,7 @@ export class LevelEditor {
     for (let i = 0; i < 3; i++) {
       password += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-
-    const uriHash = '%' + password.split('')
-      .map(c => c.charCodeAt(0).toString(16).padStart(2, '0'))
-      .join('%');
-
-    document.getElementById('passwordDisplay').textContent = password;
-    document.getElementById('uriDisplay').textContent = uriHash;
+    
+    document.getElementById('passwordDisplay')?.textContent = password;
   }
 }

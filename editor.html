@@ -56,9 +56,6 @@
       image-rendering: pixelated;
       image-rendering: crisp-edges;
       display: block;
-    }    
-
-    #levelCanvas {
       grid-area: canvas;
       border: 1px solid var(--color);
       justify-self: center;
@@ -99,42 +96,46 @@
     <h1>Block Dude Level Creator</h1>
 
     <section id="controls">
-      <div>
+      <fieldset>
+        <legend>Level Size</legend>
         <label>Width: <input type="number" id="widthInput" value="18" min="5" max="50"></label>
         <label>Height: <input type="number" id="heightInput" value="12" min="5" max="50"></label>
         <button id="resizeBtn">Resize</button>
-      </div>
-      <div>
+      </fieldset>
+      <fieldset>
+        <legend>Tools</legend>
         <button id="emptyBtn" data-tool="empty">Eraser</button>
         <button id="wallBtn" data-tool="#">Wall (#)</button>
         <button id="blockBtn" data-tool="B">Block (B)</button>
         <button id="doorBtn" data-tool="D">Door (D)</button>
         <button id="dudeBtn" data-tool="U">Dude (U)</button>
-      </div>
+      </fieldset>
+      <fieldset>
+        <legend>Password Generator</legend>
+        <button id="generateBtn">Generate Password</button>
+        <output id="passwordoutput">
+          <p>Password: <strong id="passwordDisplay"></strong></p>
+        </output>
+      </fieldset>
     </section>
 
-    <section id="levelpassword">
-      <h3>Password Generator</h3>
-      <p><button id="generateBtn">Generate Password</button></p>
-      <output id="passwordoutput">
-        <p>Password: <strong id="passwordDisplay"></strong></p>
-        <p>URI Hash: <strong id="uriDisplay"></strong></p>
-      </output>
-    </section>
-
-    <canvas id="levelCanvas"></canvas>
+    <canvas></canvas>
 
     <section id="levelexport">
       <button id="exportBtn">Export Level</button>
-      <h4>Plain Text Format:</h4>
-      <textarea id="output" rows="10" cols="50" readonly></textarea>
       <h4>Shareable URL:</h4>
       <textarea id="urlOutput" rows="3" cols="50" readonly></textarea>
+      <h4>Plain Text Format:</h4>
+      <textarea id="output" rows="10" cols="50" readonly></textarea>
     </section>
 
     <section id="levelimport">
       <button id="importBtn">Import Level</button>
-      <textarea id="import" rows="20" cols="50" placeholder="Paste level here and click Import"></textarea>
+      <button id="urlImportBtn">Import from URL</button>
+      <h4>Import from URL:</h4>
+      <textarea id="urlImport" rows="3" cols="50" placeholder="Paste level URL here"></textarea>
+      <h4>Import from Text:</h4>
+      <textarea id="import" rows="10" cols="50" placeholder="Paste level here and click Import"></textarea>
     </section>
 
   </main>

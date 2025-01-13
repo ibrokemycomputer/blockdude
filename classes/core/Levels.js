@@ -3,225 +3,36 @@ import { Brick } from '../elements/Brick.js';
 import { Block } from '../elements/Block.js';
 import { Door } from '../elements/Door.js';
 import { Dude } from '../elements/Dude.js';
+import { GameLevels } from '../../levels/GameLevels.js';
 
 export class Levels {
-  static #LEVELS = [
-`
-#                  #
-#                  #
-#                  #
-#   #       #      #
-#D  #   # B # B U  #
-####################`,
-
-`
- #    ##        ##    
- #                #   
-##                 #  
-#D                  # 
-##                   #
- #           #  B    #
- #           #B BBU  #
- #####   #############
-     #  B#            
-     #####            `,
-
-`
-#                 
- #   ############# 
-# # #             #
-#  #              #
-#                B#
-#               BB#
-# ###    U   #B ## 
-# # #    #  #####  
-# # #BB ##  #      
-#D# ###### ##      
-### ##   ###       `,
-
-`
-                  #     
-                 # #    
-       #        #   #   
-      # #      #     #  
-   ###   #    #       # 
-  #       #  #         #
- #         ##          #
- #                    B#
- #                   BB#
- #               U   ###
-##    #          #   #  
-#D    # B        #####  
-##### # B   B  ###      
-    # # B # #B #        
-    # ##########        
-    ###                 `,
-
-`
-     ###    ######### 
- ####   ####         #
-#                    #
-#                    #
-#                    #
-#     #              #
-#     #              #
-#     #BBBB          #
-#D   #######U        #
-## ###     ## #     B#
- # #        # ##   BB#
- # #        # ##  BBB#
- ###        # ########
-            ###       `,
-
-`
- ###             ####
- #  #############   #
-##                  #
-#D                  #
-##                  #
- #                BB#
- #BB        #  B  ###
- #BBB       #UBBB #  
- #BBBB      ##### #  
- #####    ###   ###  
-     #   B#          
-     ## ###          
-      ###            `,
-
-`
-  #   #####   ##   ###  
- # # #     # #  # #   # 
- #  ##      ##   ##    #
- #   #       #    #    #
- #                    B#
- #                    B#
-##                   BB#
-#D   B               ###
-##   # B     #    ## #  
- #   # B    ## B U####  
- ##  # BBB  ## BBB#     
-  #  ###### #######     
-  ## #    ###           
-   ###                  `,
-
-`
- ###       ####   #######  
-#   #     #    # #       # 
-#    #   #     ##         #
-#B    ###    # #     ###  #
-#BB         ##      ## #  #
-####       ##          #D #
-   ##            ##    ## #
-  #    B #      #  #      #
-  #    B# #    #   #      #
- #   ###   #    #  #     B#
- #      # #      ##     BB#
-#        #           ######
-#            B            #
-#    B      ###          B#
-#   ###                 BB#
-#        B       B  U  BBB#
-###########################`,
-
-`
-        ###         
-       #   #        
-      #     #  #####
-     #       ##    #
-    #     B        #
-   #      BB      B#
-  #       ###    BB#
- #            U ####
-#             B    #
-#D           ###   #
-##    ##   #      B#
- #    ##B  ##   ####
- #    #######  ##   
- ###  #     # ##    
-   # ##     ###     
-   ###              `,
-
-`
-   #####################   
- ##           #         #  
-####B       BB#B   BBB B## 
-#  ##  #   #####  B### ## #
-#   #  ##        ### ###  #
-#   ##  ##BBBB            #
-#D       #######          #
-##        #   ###        ##
- #     B   # #  ##        #
- #     #    #    ##       #
- ####  ##             #####
-   #####      U           #
-   #          #           #
-   #         ##    ########
-   #        ##           # 
-   #          B         B# 
-   #B    ###########   BB# 
-   #BB  ##         ## BBB# 
-   ######           ###### `,
-
-`
-#############################
-#  #   #                    #
-#     B#BB            ##### #
-#B   ### B##     B  ##  D # #
-#BB    ###   U  B       # # #
-###  BB#     # B          # #
-#   ####      #  ###   ###  #
-#B            # #      #  B #
-#BB       ### # #B    #  ####
-#### B   ###  # ##B  # B #  #
-#           B ###  B#   #   #
-#   B     BB #   ####       #
-#    #########        ##### #
-#              B   B##    # #
-####           B   #    BB# #
-#B##   #    #          #### #
-##B### #    #   BBB B       #
-#B#B#B##    #        BBB    #
-#############################`
-];
-
-  static #HASHES = [
-    '%74%63%70',
-    '%41%52%6f',
-    '%43%4b%73',
-    '%64%61%4e',
-    '%42%41%48',
-    '%49%6f%6e',
-    '%54%77%65',
-    '%6e%54%79',
-    '%69%52%43',
-    '%4a%6d%4b',
-    '%77%54%46'
-  ];
-
-  static #RHASHES = Levels.#HASHES.reduce((acc, hash, i) => {
-    acc[decodeURI(hash)] = i;
-    return acc;
-  }, {});
-
   static getLevel(index) {
-    return this.#LEVELS[index];
+    return GameLevels.getLevel(index);
   }
 
   static getLevelCount() {
-    return this.#LEVELS.length;
+    return GameLevels.getLevelCount();
   }
 
   static validateHash(hash) {
-    return this.#RHASHES[decodeURI(hash)] !== undefined;
+    return GameLevels.getLevelByHash(hash) !== undefined;
   }
 
   static getLevelByHash(hash) {
-    return this.#RHASHES[decodeURI(hash)];
+    return GameLevels.getLevelByHash(hash);
   }
 
-  static makeLevel(str) {
+  static makeLevel(levelData) {
+    if (!levelData?.data || typeof levelData.data !== 'string') {
+      console.error('Invalid level data:', levelData);
+      // Return a basic empty level as fallback
+      return this.makeLevel({
+        data: '####\n#U #\n####'
+      });
+    }
+
     let elems = new Array();
-    let rows = str.split("\n");
+    let rows = levelData.data.trim().split("\n");
     let mcols = 0;
     for (let r = 0; r < rows.length; r++) {
       if (rows[r].length > mcols) {
@@ -264,21 +75,33 @@ export class Levels {
   }
 
   static setLevel(state, levelIndex) {
-    if (!levelIndex) levelIndex = 0;
-    const levelStr = Levels.getLevel(levelIndex);
-    let lvl = Levels.makeLevel(levelStr);
+    if (levelIndex === undefined || levelIndex === null) levelIndex = 0;
+    const levelData = GameLevels.getLevel(levelIndex);
+    if (!levelData) {
+      console.error('No level data found for index:', levelIndex);
+      levelIndex = 0;
+      levelData = GameLevels.getLevel(0);
+    }
+
+    let lvl = this.makeLevel(levelData);
     state.level = levelIndex;
     state.dude = lvl.dude;
     state.env = lvl.env;
     lvl.env.state = state;
-    state.iface.setEnvironment(state.env);
-    state.iface.setCenter(state.dude);
-    state.iface.update();
-    let lvlhash = Levels.#HASHES[levelIndex];
-    if (levelIndex != 0 && lvlhash) {
-      if (window.location.hash != lvlhash) window.location.hash = lvlhash;
-    } else {
-      if (window.location.hash != '#' && window.location.hash != '') window.location.hash = '';
+    
+    if (state.iface) {
+      state.iface.setEnvironment(state.env);
+      state.iface.setCenter(state.dude);
+      state.iface.update();
+    }
+
+    const hash = levelData.pass;
+    if (levelIndex !== 0 && hash) {
+      if (window.location.hash !== `#${hash}`) {
+        window.location.hash = hash;
+      }
+    } else if (window.location.hash !== '#' && window.location.hash !== '') {
+      window.location.hash = '';
     }
   }
 
@@ -308,17 +131,8 @@ export class Levels {
       throw new Error('Invalid level data format');
     }
 
-    // Convert the level data into a string format
-    const mapStr = levelData.map.map(row =>
-      row.map(cell => {
-        switch (cell) {
-          case 'wall': return '#';
-          case 'block': return 'B';
-          case 'door': return 'D';
-          default: return ' ';
-        }
-      }).join('')
-    ).join('\n');
+    // Map is already in character format, just need to convert to string
+    const mapStr = levelData.map.map(row => row.join('')).join('\n');
 
     // Add the dude and door at their positions
     let rows = mapStr.split('\n');
@@ -337,12 +151,12 @@ export class Levels {
     state.level = -1; // Custom level indicator
     state.dude = lvl.dude;
     state.env = lvl.env;
+    state.customLevelData = levelData; // Store for replay
     lvl.env.state = state;
 
-    // Ensure the interface is properly connected
     state.iface.setEnvironment(state.env);
     state.iface.setCenter(state.dude);
-    state.env.update(); // Make sure environment is initialized
+    state.env.update();
     state.iface.update();
   }
 }
