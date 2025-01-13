@@ -29,6 +29,7 @@ export class Interface {
     this.#canvas = document.createElement('canvas');
     this.#canvas.width = this.w * this.cw;
     this.#canvas.height = this.h * this.ch;
+    this.#canvas.tabIndex = 0;
     this.#ctx = this.#canvas.getContext('2d');
 
     this.setEnvironment(this.env);
