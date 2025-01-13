@@ -131,22 +131,12 @@ export class Levels {
       throw new Error('Invalid level data format');
     }
 
-    // Map is already in character format, just need to convert to string
-    const mapStr = levelData.map.map(row => row.join('')).join('\n');
+    // Create a level object in the format makeLevel expects
+    const levelObj = {
+      data: levelData.map.map(row => row.join('')).join('\n')
+    };
 
-    // Add the dude and door at their positions
-    let rows = mapStr.split('\n');
-    const dudeY = levelData.start.y;
-    const doorY = levelData.door.y;
-
-    rows[dudeY] = rows[dudeY].substring(0, levelData.start.x) + 'U' +
-      rows[dudeY].substring(levelData.start.x + 1);
-
-    rows[doorY] = rows[doorY].substring(0, levelData.door.x) + 'D' +
-      rows[doorY].substring(levelData.door.x + 1);
-
-    const finalLevelStr = rows.join('\n');
-    const lvl = Levels.makeLevel(finalLevelStr);
+    const lvl = Levels.makeLevel(levelObj);
 
     state.level = -1; // Custom level indicator
     state.dude = lvl.dude;
@@ -154,9 +144,11 @@ export class Levels {
     state.customLevelData = levelData; // Store for replay
     lvl.env.state = state;
 
-    state.iface.setEnvironment(state.env);
-    state.iface.setCenter(state.dude);
-    state.env.update();
-    state.iface.update();
+    if (state.iface) {
+      state.iface.setEnvironment(state.env);
+      state.iface.setCenter(state.dude);
+      state.env.update();
+      state.iface.update();
+    }
   }
 }
