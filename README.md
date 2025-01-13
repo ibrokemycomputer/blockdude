@@ -1,3 +1,52 @@
+# Block Dude for Web
+
+## Intro/Credits
+
+As with all projects, **a WIP**! I'll be honest, I kinda just lazily migrated things/didn't try to optimize much. See [Issues](https://github.com/ibrokemycomputer/blockdude/issues) for known issues/upcoming feature ideas.
+
+1. The majority of the logic/general structure/classes are all based off of [_Andrew Zich's_ pre-existing web version](https://azich.org/blockdude/). There was no way I was going to recreate this game from scratch, so I'm glad someone did and we can keep it alive and keep building off of it! **Thank you Andrew!**
+2. Original developer page (includes links to solutions at the bottom): https://www.detachedsolutions.com/puzzpack/blockdude.php
+3. _Texas Instruments_ page (includes link to the original game/official `.8xk` package): https://education.ti.com/en/software/details/en/6AD0564FC779423E90F3BE776F72B5FD/83puzzlepack
+
+## Local Dev
+
+First install... nothing extra! 😉
+
+Just serve the folder as a simple website using your favorite IDE plugin (many people like [LiveServer](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) for VSCode), npm package (`npx serve -L .`), or depending on your OS, a simple built-in python (`python3 -m http.server`) or php (`php -S localhost:8000`) server. The world is your ~~oyster~~ [clam](https://www.youtube.com/watch?v=2lwlllR58y0)!
+
+## Level Editor
+
+I added a level editor! Block Dude is great, but whats an old-school port without the ability for custom maps?
+
+You can view the editor at `/editor` (in `editor.html`).
+
+It's still somewhat a WIP but seems to "basically" work. Im sure there's some optimization to do there. 
+
+There's an option to import a level from its text format, and to export to text format (for dev use) but also to a URL that will dynamically load in a custom level.
+
+After beating a custom level, you have the option to replay (OK) or go to the default first level (CANCEL). This needs better UX.
+
+Note: The "Password Generator" is for "dev use" if they wanted to add a new level to the `#LEVELS` and `#HASHES` in `Levels.js`.
+
+## Level Passwords
+
+- Level 01 - `tcp`
+- Level 02 - `ARo`
+- Level 03 - `CKs`
+- Level 04 - `daN`
+- Level 05 - `BAH`
+- Level 06 - `Ion`
+- Level 07 - `Twe`
+- Level 08 - `nTy`
+- Level 09 - `iRC`
+- Level 10 - `JmK`
+- Level 11 - `wTF`
+
+---
+
+> Semi-original documentation listed below
+
+---
 
 Block Dude Documentation
 ========================
@@ -39,22 +88,6 @@ Controls in Block Dude
 Entering A Password
 -------------------
 From the second item of the main menu in Block Dude, you can enter a password for a level that you've already solved up to. Knowing the password for later levels in the game will allow you to skip those you have already beaten before. A password consists of 3 characters, each having the possibility of being A-Z, a-z, or 0-9. You will select one character at a time, and cannot go back to a previous character of the 3 once you have selected one. Press the Up and Down keys to change the current character. Up will move to the next one, ascending through the uppercase alphabet, then the lowercase alphabet, then numbers, and back to uppercase. The Down key will change to the previous character in the opposite direction as Up. Press the Enter or 2nd key to select the character you are currently showing, and when 3 characters are chosen, the password will be processed. If it matches the passwords for any of the 11 levels, you will be started on that level, else you will start at level 1.
-
-
-Level Passwords
---------------------
-- Level 01 - `tcp`
-- Level 02 - `ARo`
-- Level 03 - `CKs`
-- Level 04 - `daN`
-- Level 05 - `BAH`
-- Level 06 - `Ion`
-- Level 07 - `Twe`
-- Level 08 - `nTy`
-- Level 09 - `iRC`
-- Level 10 - `JmK`
-- Level 11 - `wTF`
-
 
 PuzzPack Information
 --------------------

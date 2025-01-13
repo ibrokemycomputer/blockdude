@@ -130,7 +130,7 @@ export class LevelEditor {
     };
 
     const urlParam = encodeURIComponent(JSON.stringify(levelData));
-    const baseUrl = window.location.origin + window.location.pathname.replace('editor.html', 'index.html');
+    const baseUrl = window.location.origin + window.location.pathname.replace('editor', '');
     const urlOutput = document.getElementById('urlOutput');
     urlOutput.value = `${baseUrl}?level=${urlParam}`;
   }
