@@ -16,6 +16,26 @@ export function createGame(container) {
   state.iface = new Interface(null, 18, 12);
   state.iface.render(container);
 
+  // Setup fullscreen functionality
+  const fullscreenBtn = document.querySelector('.fullscreen-button');
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', () => {
+      const container = document.querySelector('.fullscreen-container');
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    // Update button text based on fullscreen state
+    document.addEventListener('fullscreenchange', () => {
+      fullscreenBtn.textContent = document.fullscreenElement ? 'Exit Fullscreen' : 'Fullscreen';
+    });
+  }
+
   // Check for custom level in query params first
   const params = new URLSearchParams(window.location.search);
   const customLevel = params.get('level');

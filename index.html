@@ -93,12 +93,45 @@
       background-color: light-dark(var(--color), var(--background));
       box-shadow: 0 0 1px rgb(255, 255, 255);
     }
+
+    .fullscreen-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .fullscreen-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 1;
+      background: light-dark(var(--color), var(--background));
+      color: light-dark(var(--background), var(--color));
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 14px;
+      opacity: 0.66;
+    }
+
+    .fullscreen-button:hover {
+      border: 2px solid light-dark(var(--background), var(--color));
+      opacity: 1;
+    }
+
+    :fullscreen block-dude {
+      width: 100vw;
+      height: 100vh;
+      aspect-ratio: unset;
+      border: none;
+    }
   </style>
 </head>
 
 <body>
   <main>
-    <block-dude></block-dude>
+    <div class="fullscreen-container">
+      <button class="fullscreen-button">Fullscreen</button>
+      <block-dude></block-dude>
+    </div>
 
     <div data-scroller>
       <h1>Block Dude</h1>
