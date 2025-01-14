@@ -6,15 +6,22 @@ Play now at https://ibrokemycomputer.github.io/blockdude/
 
 As with all projects, **a WIP**! I'll be honest, I kinda just lazily migrated things/didn't try to optimize much. See [Issues](https://github.com/ibrokemycomputer/blockdude/issues) for known issues/upcoming feature ideas.
 
-1. The majority of the logic/general structure/classes are all based off of [_Andrew Zich's_ pre-existing web version](https://azich.org/blockdude/). There was no way I was going to recreate this game from scratch, so I'm glad someone did and we can keep it alive and keep building off of it! **Thank you Andrew!**
-2. Original developer page (includes links to solutions at the bottom): https://www.detachedsolutions.com/puzzpack/blockdude.php
+1. The majority of the logic and general ideas are based off of [_Andrew Zich's_ pre-existing web version](https://azich.org/blockdude/). There was no way I was going to recreate this game from scratch, so I'm glad someone already did and we can keep it alive and keep building off of it! **Thank you Andrew!**
+2. Original developer page for the TI-83/84 version (includes links to solutions at the bottom): https://www.detachedsolutions.com/puzzpack/blockdude.php
+  - I love that there's no need for The Wayback Machine here ❤️
 3. _Texas Instruments_ page (includes link to the original game/official `.8xk` package): https://education.ti.com/en/software/details/en/6AD0564FC779423E90F3BE776F72B5FD/83puzzlepack
+
+## Touch Controls
+
+WIP, but for now it uses "edge detection", aka tap om the top/right,bottom/left to simulate the arrow keys, and reload the page to restart.
+
+"Panning" on mobile is an [open issue](https://github.com/ibrokemycomputer/blockdude/issues/5).
 
 ## Local Dev
 
 First install... nothing extra! 😉
 
-Just serve the folder as a simple website using your favorite IDE plugin (many people like [LiveServer](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) for VSCode), npm package (`npx serve -L .`), or depending on your OS, a simple built-in python (`python3 -m http.server`) or php (`php -S localhost:8000`) server. The world is your ~~oyster~~ [clam](https://www.youtube.com/watch?v=2lwlllR58y0)!
+Just serve the root folder as a simple website using your favorite IDE plugin (many people like [LiveServer](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) for VSCode), npm package (`npx serve -L .`), or depending on your OS, a simple built-in python (`python3 -m http.server`) or php (`php -S localhost:8000`) server. The world is your ~~oyster~~ [clam](https://www.youtube.com/watch?v=2lwlllR58y0)!
 
 ## Level Editor
 
